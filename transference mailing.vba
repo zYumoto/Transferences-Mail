@@ -36,7 +36,6 @@ Sub SendEmails()
         End If
     Next
 
-    ' Coleta clientes únicos
     Set uniqueClients = New Collection
     On Error Resume Next
     For Each cell In wsTemp.Range("A2:A" & wsTemp.Cells(wsTemp.Rows.Count, 1).End(xlUp).row)
@@ -47,7 +46,6 @@ Sub SendEmails()
     ' Inicializa Outlook
     Set OutlookApp = CreateObject("Outlook.Application")
 
-    ' Loop por cliente
     For Each key In uniqueClients
         wsTemp.Rows(1).AutoFilter Field:=1, Criteria1:=key
         Set rngVisible = wsTemp.Range("A1:K" & wsTemp.Cells(wsTemp.Rows.Count, 1).End(xlUp).row).SpecialCells(xlCellTypeVisible)
@@ -108,17 +106,17 @@ SkipHeader:
             .HTMLBody = preText & htmlTable & postText
             
             On Error GoTo RemetenteErro
-            .SentOnBehalfOfName = "BR241-mscbrazil.transferencecustomerservice@msc.com"
+            .SentOnBehalfOfName = "EMAIL QUE VAI SER COLOCADO NO TO"
             On Error GoTo 0
             
-            .Send
+            .Send ' da p usar .Display para mostrar a tela criando
         End With
 
         wsTemp.AutoFilterMode = False
         GoTo ContinuaEnvio
 
 RemetenteErro:
-        MsgBox "Erro ao definir o remetente 'From'. Verifique se você tem permissão para enviar como 'BR241-mscbrazil.transferencecustomerservice@msc.com'.", vbCritical, "Erro de Remetente"
+        MsgBox "Erro ao definir o remetente 'From'. Verifique se você tem permissão para enviar como 'MUDAR EMAIL'.", vbCritical, "Erro de Remetente"
         On Error GoTo 0
         wsTemp.AutoFilterMode = False
         GoTo SkipClient
